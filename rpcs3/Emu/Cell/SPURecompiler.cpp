@@ -4577,13 +4577,17 @@ public:
 		legacy::FunctionPassManager pm(module.get());
 
 		// Basic optimizations
+		pm.add(createGlobalOptimizerPass());
+		pm.add(createInstructionCombiningPass());
+		pm.add(createLoopSinkPass());
+		pm.add(createJumpThreadingPass());
 		pm.add(createEarlyCSEPass());
 		pm.add(createCFGSimplificationPass());
 		pm.add(createNewGVNPass());
 		pm.add(createDeadStoreEliminationPass());
 		pm.add(createLICMPass());
 		pm.add(createAggressiveDCEPass());
-		//pm.add(createLintPass()); // Check
+		pm.add(createLintPass()); // Check
 
 		for (const auto& func : m_functions)
 		{
@@ -4983,11 +4987,17 @@ public:
 		legacy::FunctionPassManager pm(module.get());
 
 		// Basic optimizations
+		pm.add(createGlobalOptimizerPass());
+		pm.add(createInstructionCombiningPass());
+		pm.add(createLoopSinkPass());
+		pm.add(createJumpThreadingPass());
 		pm.add(createEarlyCSEPass());
 		pm.add(createCFGSimplificationPass());
+		pm.add(createNewGVNPass());
 		pm.add(createDeadStoreEliminationPass());
+		pm.add(createLICMPass());
 		pm.add(createAggressiveDCEPass());
-		//pm.add(createLintPass());
+		pm.add(createLintPass()); // Check
 
 		std::string log;
 
